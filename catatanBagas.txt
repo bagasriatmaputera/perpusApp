@@ -1,0 +1,35 @@
+1. buat migration table nya dan buat function relasi pada model
+2. kemudian buat akun dengan db seed
+        public function run(): void
+            {
+                // User::factory(10)->create();
+
+                User::create([
+                    'nama' => 'admin',
+                    'email' => 'admin@gmail.com',
+                    'alamat' => 'Jakarta',
+                    'jenis' => 'admin',
+                    'telepon' => '089878976544',
+                    'password' => Hash::make('12345678')
+
+                ]);
+            }
+3.kemudian buat component livewire HomeComponent dengan cara php artisan make:livewire HomeComponent
+4. Atur store login ke redirect 'home'
+5. Costumisasi pada component/layouts/ seperti header dan sidebar
+
+===============================================
+view/app.blade
+<x-layouts.app.sidebar :title="$title ?? null">
+    <flux:main>
+        {{ $slot }}
+    </flux:main>
+</x-layouts.app.sidebar>
+
+seluruh component akan masuk dalam $slot
+===============================================
+
+7. Buat component baru bernama card untk menampung card key INdeks
+    php artisan make:view component/layouts/card
+
+8. gunaka daisy ui untuk ui bagus, kemudian pahami penggunaan flex dan warp
