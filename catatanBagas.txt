@@ -32,4 +32,9 @@ seluruh component akan masuk dalam $slot
 7. Buat component baru bernama card untk menampung card key INdeks
     php artisan make:view component/layouts/card
 
-8. gunaka daisy ui untuk ui bagus, kemudian pahami penggunaan flex dan warp
+8. gunaka theme daisy ui untuk ui bagus, kemudian pahami penggunaan flex dan warp
+================================================================================
+        USER component
+9. buat UserComponent dengn php artisan make:livewire UserComponent
+10. buat Route get user dan tambah navigasi user disidebar component
+12. buat logika tombol login dan logout menggunalan @auth dan @guest

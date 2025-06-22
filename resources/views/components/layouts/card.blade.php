@@ -25,7 +25,7 @@
     <div class="h-full">
         <div class="card bg-success text-primary-content h-full">
             <div class="card-body flex flex-col justify-between">
-                <h2 class="card-title">Pinjam!</h2>
+                <h2 class="card-title">Pinjam</h2>
                 <p>Deskripsi isi kartu...</p>
                 <div class="card-actions justify-end mt-auto">
                     <button class="btn">Buy Now</button>
