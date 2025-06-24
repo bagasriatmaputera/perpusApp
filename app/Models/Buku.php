@@ -12,7 +12,7 @@ class Buku extends Model
     use HasFactory,SoftDeletes;
     protected $table = 'bukus';
     protected $primaryKey = 'id';
-    protected $fillable = ['judul','penerbit','penulis','isbn','tahun','jumlah'];
+    protected $fillable = ['judul','penerbit','penulis','isbn','tahun','jumlah','kategori_id'];
 
 
     public function kategori():BelongsTo{

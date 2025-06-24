@@ -102,7 +102,7 @@ class MemberComponent extends Component
         }
 
         session()->flash('success', 'Berhasil update member');
-        $this->reset();
+        return redirect()->route('member');
     }
 
     public function confirm($id)

@@ -152,4 +152,64 @@ seluruh component akan masuk dalam $slot
     }
 22. Buat route member
 23. Tambahkan navigasi memberi disidebar
+24. buat modal tmbahMember kemudian buat functin store
+    # <button class="btn btn-sm btn-info mb-2 mt-2" onclick="my_modal_3.showModal()">Tambah Member</button>
 
+    # public function tambahMember()
+    {
+        $this->validate([
+            'nama' => 'required|regex:/^[a-zA-Z\s]+$/',
+            'email' => 'required|email|unique:users,email',
+            'alamat' => 'required|string',
+            'telepon' => 'required|numeric',
+            'password' => 'required|min:8',
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong',
+            'nama.regex' => 'Nama hanya boleh berupa huruf',
+
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Format email salah',
+            'email.unique' => 'Email sudah digunakan',
+
+            'alamat.required' => 'Alamat tidak boleh kosong',
+            'telepon.required' => 'Telepon harus diisi',
+            'telepon.numeric' => 'Telepon harus berupa angka',
+
+            'password.required' => 'Password tidak boleh kosong',
+            'password.min' => 'Password harus lebih dari 8 karakter',
+        ]);
+
+        User::create([
+            'nama' => $this->nama,
+            'email' => $this->email,
+            'jenis' => 'member',
+            'alamat' => $this->alamat,
+            'telepon' => $this->telepon,
+            'password' => bcrypt($this->password)
+        ]);
+
+        session()->flash('success', 'Berhasil menambah member');
+        $this->reset(['nama', 'email', 'alamat', 'telepon', 'password']);
+    }
+
+25. buat juga untuk edit dan hapusnya
+
+======= Kategori ========
+26. Buat crud yang sama dan route nya
+
+
+======== Buku =========
+27. Karen Buku memiliki relation dengn katefori  mak Pada BukuComponent buat functinnya dan perharikan
+    jika pakai relasi querynya
+     public function render()
+    {
+        if ($this->cari != '') {
+            $data['buku'] = Buku::with('kategori')->where('judul', 'like', '%' . $this->cari . '%')->paginate(10);
+        } else {
+            $data['buku'] = Buku::with('kategori')->paginate(10);
+        }
+
+        //ambil data Kategori
+        $data['category'] = kategori::all();
+        return view('livewire.buku-component', $data);
+    }
