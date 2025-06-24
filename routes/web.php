@@ -2,6 +2,7 @@
 
 use App\Livewire\Actions\Logout;
 use App\Livewire\HomeComponent;
+use App\Livewire\MemberComponent;
 use App\Livewire\UserComponent;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -21,6 +22,8 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
     // Manual Route
     Route::get('/user',UserComponent::class)->name('user');
+    Route::get('/member',MemberComponent::class)->name('member');
+    Route::get('/buku',MemberComponent::class)->name('buku');
     Route::post('/logout',Logout::class)->name('logout');
 });
 

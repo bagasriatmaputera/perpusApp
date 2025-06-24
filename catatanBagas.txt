@@ -56,5 +56,100 @@ seluruh component akan masuk dalam $slot
                     </div>
 
 15. Pada USerComponent tambahkan model yang dibuat tadi
-    public $nama,$email,$password
+    public $nama,$email,$password;
+    ini untuk menerima input dari wire:model
+16. create session pada store data user untuk keperluan alert
+17. buat modal untuk edit ambil parameter id
+    <a class="btn btn-xs btn-dash btn-info" onclick="edit.showModal()"
+                            wire:click='edit({{$users->id}})'>Edit</a>
+    , buat function edit untuk kemudian definisikan id,nama,email,password
+    public function edit($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            $this->user_id = $user->id;
+            $this->nama = $user->nama;
+            $this->email = $user->email;
+            $this->password = '';
+        }
+    }
+    , kemudia beri click update, dan buat function updatenya
+        public function update()
+    {
+        $user = User::find($this->user_id);
+
+        if (!$user) {
+            session()->flash('error', 'User tidak ditemukan.');
+            return;
+        }
+
+        if ($this->password == '') {
+            $user->update([
+                'nama' => $this->nama,
+                'email' => $this->email
+            ]);
+        } else {
+            $user->update([
+                'nama' => $this->nama,
+                'email' => $this->email,
+                'password' => bcrypt($this->password)
+            ]);
+        }
+
+        session()->flash('success', 'Berhasil update user');
+        $this->reset();
+    }
+
+18. Buat modal hapus dan beri clik confirm get id saja
+    public function confirm($id){
+        $user = User::find($id);
+        if($user){
+            $this->nama = $user->nama;
+            $this->user_id = $user->id;
+        }
+    }
+
+    buat juga function destroy
+    public function destroy(){
+        $user = User::find($this->user_id);
+        if($user){
+            $user->delete();
+        }else{
+            session()->flash('error','Data Tidak Ada!');
+        }
+    }
+
+19. Buat input untuk search dan beri event wire:model.live="cari", kmudian definisikan di UserComponent
+    - <input type="text" wire:model.live='cari' placeholder="Type here" class="input" />
+    - public $nama, $email, $password, $user_id, $cari;
+
+    kemudian beri logika di function render
+
+    public function render()
+    {
+        if ($this->cari != '') {
+            $data['user'] = User::where('nama', 'like', '%' . $this->cari . '%')->orWhere('email', 'like', '%' . $this->cari . '%')->paginate(10);
+        } else {
+            $data['user'] = User::paginate(10);
+        }
+        return view('livewire.user-component', $data);
+    }
+
+=========== Kelola Member ===========
+20. Buat MemberComponeent -> php artisan make:livewire MemberComponeent
+21. Atur functinon rendernya jenis = member dan define nama,alamt,email,password,telpon
+    public $nama, $alamat, $email, $telepon, $member_id, $cari, $password;
+    public function render()
+    {
+        if ($this->cari != '') {
+            $data['member'] = User::where('jenis', 'member')->orWhere('nama', '%' . $this->cari . '%')->orWhere('email', '%' . $this->cari . '%')->paginate(10);
+        }else{
+
+            $data['member'] = User::where('jenis', 'member')->paginate(10);
+        }
+        return view('livewire.member-component',$data);
+    }
+22. Buat route member
+23. Tambahkan navigasi memberi disidebar
 

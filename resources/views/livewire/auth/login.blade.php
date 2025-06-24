@@ -92,7 +92,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
         />
 
         <!-- Password -->
-        <div class="relative">
+        <div class="relative !border border-blue-400">
             <flux:input
                 wire:model="password"
                 :label="__('Password')"

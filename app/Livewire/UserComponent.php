@@ -10,11 +10,16 @@ use Livewire\WithPagination;
 class UserComponent extends Component
 {
     use WithPagination, WithoutUrlPagination;
-    public $nama, $email, $password;
+
+    public $nama, $email, $password, $user_id, $cari;
+
     public function render()
     {
-        // guanakan fitur pagination
-        $data['user'] = User::paginate(10);
+        if ($this->cari != '') {
+            $data['user'] = User::where('nama', 'like', '%' . $this->cari . '%')->orWhere('email', 'like', '%' . $this->cari . '%')->paginate(10);
+        } else {
+            $data['user'] = User::paginate(10);
+        }
         return view('livewire.user-component', $data);
     }
 
@@ -40,10 +45,69 @@ class UserComponent extends Component
             'nama' => $this->nama,
             'email' => $this->email,
             'jenis' => 'admin',
-            'password' => $this->password,
+            'password' => bcrypt($this->password),
         ]);
-        // membuat session
-        session()->flash('success','Berhasil menambah user');
+
+        session()->flash('success', 'Berhasil menambah user');
         $this->reset();
+    }
+
+    public function edit($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            $this->user_id = $user->id;
+            $this->nama = $user->nama;
+            $this->email = $user->email;
+            $this->password = '';
+        }
+    }
+
+    public function update()
+    {
+        $user = User::find($this->user_id);
+
+        if (!$user) {
+            session()->flash('error', 'User tidak ditemukan.');
+            return;
+        }
+
+        if ($this->password == '') {
+            $user->update([
+                'nama' => $this->nama,
+                'email' => $this->email
+            ]);
+        } else {
+            $user->update([
+                'nama' => $this->nama,
+                'email' => $this->email,
+                'password' => bcrypt($this->password)
+            ]);
+        }
+
+        session()->flash('success', 'Berhasil update user');
+        $this->reset();
+    }
+
+    public function confirm($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $this->nama = $user->nama;
+            $this->user_id = $user->id;
+        }
+    }
+
+    public function destroy()
+    {
+        $user = User::find($this->user_id);
+        if ($user) {
+            $user->delete();
+            session()->flash('success', 'Berhasil Hapus!!');
+            $this->reset();
+        } else {
+            session()->flash('error', 'User tidak ditemukan.');
+        }
     }
 }
