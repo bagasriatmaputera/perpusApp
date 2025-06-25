@@ -18,7 +18,7 @@ class BukuComponent extends Component
         if ($this->cari != '') {
             $data['buku'] = Buku::with('kategori')->where('judul', 'like', '%' . $this->cari . '%')->paginate(10);
         } else {
-            $data['buku'] = Buku::with('kategori')->paginate(10);
+            $data['buku'] = Buku::with('kategori')->simplePaginate(10);
         }
 
         //ambil data Kategori

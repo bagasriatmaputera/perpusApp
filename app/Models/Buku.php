@@ -20,6 +20,6 @@ class Buku extends Model
     }
 
     public function pinjam(){
-        return $this->hasMany(Buku::class);
+        return $this->belongsTo(Buku::class);
     }
 }

@@ -213,3 +213,7 @@ seluruh component akan masuk dalam $slot
         $data['category'] = kategori::all();
         return view('livewire.buku-component', $data);
     }
+
+    lanjutkan crud nya
+
+

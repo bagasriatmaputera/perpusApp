@@ -18,7 +18,7 @@ class UserComponent extends Component
         if ($this->cari != '') {
             $data['user'] = User::where('nama', 'like', '%' . $this->cari . '%')->orWhere('email', 'like', '%' . $this->cari . '%')->paginate(10);
         } else {
-            $data['user'] = User::paginate(10);
+            $data['user'] = User::orderBy('nama')->paginate(10);
         }
         return view('livewire.user-component', $data);
     }

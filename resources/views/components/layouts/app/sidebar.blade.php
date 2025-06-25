@@ -31,6 +31,8 @@
                         <li><a href="{{route('user')}}">User</a></li>
                         <li><a href="{{route('member')}}">Member</a></li>
                         <li><a href="{{route('buku')}}">Buku</a></li>
+                        <li><a href="{{route('kategori')}}">Kategori</a></li>
+                        <li><a href="{{route('pinjam')}}">Pinjam</a></li>
                         <li>{{-- profile --}}
                             <div class="avatar avatar-placeholder h-10">
                                 <div class="bg-neutral text-neutral-content w-10 rounded-full">
@@ -136,6 +138,17 @@
                             </svg>
                         </i>
                         Buku
+                    </a>
+                </li>
+                <li>
+                    <a class="truncate" href="{{ route('pinjam') }}"><i><svg xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                            </svg>
+
+                        </i>
+                        Pinjam
                     </a>
                 </li>
                 <li>
