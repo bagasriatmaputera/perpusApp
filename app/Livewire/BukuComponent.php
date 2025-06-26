@@ -12,7 +12,7 @@ class BukuComponent extends Component
 {
     use WithPagination, WithoutUrlPagination;
 
-    public $judul, $penulis, $penerbit, $tahun, $isbn, $jumlah, $kategori, $buku_id, $cari;
+    public $judul, $penulis, $penerbit, $tahun, $isbn, $jumlah, $kategori = '', $buku_id, $cari;
     public function render()
     {
         if ($this->cari != '') {
@@ -96,7 +96,18 @@ class BukuComponent extends Component
     public function update()
     {
         $buku = Buku::find($this->buku_id);
+
         if ($buku) {
+            $this->validate([
+                'judul' => 'required|string|max:255',
+                'kategori' => 'required|exists:kategoris,id',
+                'penulis' => 'required|string|max:255',
+                'penerbit' => 'required|string|max:255',
+                'isbn' => 'nullable|string|max:20',
+                'tahun' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
+                'jumlah' => 'required|integer|min:1',
+            ]);
+
             $buku->update([
                 'judul' => $this->judul,
                 'kategori_id' => $this->kategori,
@@ -106,11 +117,12 @@ class BukuComponent extends Component
                 'tahun' => $this->tahun,
                 'jumlah' => $this->jumlah,
             ]);
+
+            session()->flash('success', 'Berhasil edit buku');
+            $this->reset();
         } else {
             session()->flash('error', 'Data tidak ditemukan');
         }
-        session()->flash('success', 'Berhasil edit buku');
-        $this->reset();
     }
 
     public function confirm($id)

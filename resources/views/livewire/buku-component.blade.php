@@ -53,7 +53,7 @@
 
                     <label class="label">Kategori</label>
                     <select class="select select-neutral" wire:model='kategori'>
-                        <option disabled selected>Pilih Kategori</option>
+                        <option value="" disabled selected>Pilih Kategori</option>
                         @foreach($category as $categories)
                         <option value="{{$categories->id}}">{{$categories->nama}}</option>
                         @endforeach
@@ -112,7 +112,7 @@
 
                     <label class="label">ISBN</label>
                     <input type="text" class="input w-auto" wire:model='isbn' placeholder="Masukan isbn."
-                        value="{{@old('isbn')}}" />
+                        value="" />
                     @error('isbn')
                     <div role="alert" class="alert alert-error mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
@@ -125,7 +125,7 @@
                     @enderror
 
                     <label class="label">Jumah</label>
-                    <input type="text" class="input w-auto" wire:model='jumlah' placeholder="Masukan jumlah."
+                    <input type="numeric" class="input w-auto" wire:model='jumlah' placeholder="Masukan jumlah."
                         value="{{@old('jumlah')}}" />
                     @error('jumlah')
                     <div role="alert" class="alert alert-error mb-2">
@@ -168,7 +168,7 @@
 
                     <label class="label">Kategori</label>
                     <select class="select select-neutral" wire:model='kategori'>
-                        <option disabled selected>Pilih Kategori</option>
+                        <option value="" disabled selected>Pilih Kategori</option>
                         @foreach($category as $categories)
                         <option value="{{$categories->id}}">{{$categories->nama}}</option>
                         @endforeach

@@ -41,11 +41,12 @@
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Nama Peminjam</legend>
                         <select wire:model='member' class="select">
-                            <option disabled selected>--Pilih--</option>
+                            <option value="" disabled selected>--Pilih--</option>
                             @foreach($orang as $users)
-                            <option value="{{$users->id}}">{{$users->nama}}</option>
+                            <option value="{{ $users->id }}">{{ $users->nama }}</option>
                             @endforeach
                         </select>
+
                     </fieldset>
                     @error('member')
                     <div role="alert" class="alert alert-error mb-2">
@@ -60,7 +61,7 @@
 
                     <label class="label">Buku</label>
                     <select class="select select-neutral" wire:model='buku'>
-                        <option disabled selected>Pilih Buku</option>
+                        <option value="" disabled selected>Pilih Buku</option>
                         @foreach($book as $books)
                         <option value="{{$books->id}}">{{$books->judul}}</option>
                         @endforeach
@@ -77,62 +78,47 @@
                     @enderror
 
                 </fieldset>
-                <button type="submit" class="btn btn-sm btn-info mt-2 ">Tambah Member</button>
+                <button type="submit" class="btn btn-sm btn-info mt-2 ">Tambah Pinjam</button>
             </form>
         </div>
     </dialog>
 
     {{-- modal Edit Pinjam --}}
-    <dialog wire:ignore.self id="my_modal_3" class="modal">
+    <dialog wire:ignore.self id="edit" class="modal">
         <div class="modal-box">
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <form wire:submit.prevent='update'>
-                <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4">
-                    <legend class="fieldset-legend">Tambah Pinjam</legend>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Nama Peminjam:</legend>
+                <input type="text" readonly class="input input-info" value="{{$this->nama}}" />
+            </fieldset>
 
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Nama Peminjam</legend>
-                        <select wire:model='member' class="select">
-                            <option disabled selected>--Pilih--</option>
-                            @foreach($orang as $users)
-                            <option value="{{$users->id}}">{{$users->nama}}</option>
-                            @endforeach
-                        </select>
-                    </fieldset>
-                    @error('member')
-                    <div role="alert" class="alert alert-error mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{$message}}</span>
-                    </div>
-                    @enderror
+            {{-- judul buku --}}
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Buku:</legend>
+                <input type="text" readonly class="input input-info" value="{{$this->buku}}" />
+            </fieldset>
 
-                    <label class="label">Buku</label>
-                    <select class="select select-neutral" wire:model='buku'>
-                        <option disabled selected>Pilih Buku</option>
-                        @foreach($book as $books)
-                        <option value="{{$books->id}}">{{$books->judul}}</option>
-                        @endforeach
-                    </select>
-                    @error('buku')
-                    <div role="alert" class="alert alert-error mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{$message}}</span>
-                    </div>
-                    @enderror
-
-                </fieldset>
-                <button type="submit" class="btn btn-sm btn-info mt-2 ">Tambah Member</button>
-            </form>
+            {{-- Tgl info --}}
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Tgl Dikembalikan:</legend>
+                <input type="text" readonly class="input input-success" value="{{$this->kembalikan ?? 'Belum Dikembalikan'}}" />
+            </fieldset>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Tgl Pinjam:</legend>
+                <input type="text" readonly class="input input-warning" value="{{$this->tgl_pinjam}}" />
+            </fieldset>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Batas Tgl Pinjam:</legend>
+                <input type="text" readonly class="input input-warning" value="{{$this->tgl_kembali}}" />
+            </fieldset>
+            <div class="modal-action">
+                <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn btn-sm">Close</button>
+                </form>
+                <form wire:submit.prevent='update'>
+                    <button class="btn btn-sm btn-accent">Ubah Status</button>
+                </form>
+            </div>
         </div>
     </dialog>
 
@@ -164,7 +150,7 @@
                     <th>Nama Peminjam</th>
                     <th>Judul Buku</th>
                     <th>Tanggal Pinjam </th>
-                    <th>Tanggal Kembali</th>
+                    <th>Batas Waktu Pinjam</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
@@ -179,8 +165,9 @@
                     <td>{{$loans->tgl_pinjam}}</td>
                     <td>{{$loans->tgl_kembali}}</td>
                     <td>{{$loans->status}}</td>
-                    <td><a wire:click='confirm({{$loans->id}})' class="btn btn-xs btn-dash btn-error"
-                            onclick="hapus.showModal()">Hapus</a></td>
+                    <td><a wire:click='edit({{$loans->id}})' class="btn btn-xs btn-dash btn-accent"
+                            onclick="edit.showModal()">Status</a>  <a wire:click='confirm({{$loans->id}})'
+                            class="btn btn-xs btn-dash btn-error" onclick="hapus.showModal()">Hapus</a></td>
                 </tr>
                 @endforeach
                 {{ $pinjam->links() }}
