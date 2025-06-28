@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Buku;
 use App\Models\User;
 use App\Models\Pinjam;
@@ -13,10 +14,13 @@ class PinjamComponent extends Component
 {
     use WithPagination, WithoutUrlPagination;
 
-    public $tgl_pinjam, $member = '', $tgl_kembali, $status, $buku = '', $cari, $pinjam_id, $nama, $kembalikan, $buku_id;
+    public $tgl_pinjam, $member = '', $tgl_kembali, $status, $buku = '', $cari, $pinjam_id, $nama, $kembalikan, $buku_id, $apakah_terkena_denda;
 
     public function render()
     {
+
+
+
         if ($this->cari != '') {
             $data['pinjam'] = Pinjam::with(['user', 'buku'])
                 ->whereHas('user', function ($q) {
@@ -72,7 +76,9 @@ class PinjamComponent extends Component
     public function edit($id)
     {
         $pinjam = Pinjam::find($id);
+        $denda = $pinjam->hitungDenda();
         $namaPeminjam = $pinjam->user->nama;
+        $namaBuku = $pinjam->buku->judul;
         $namaBuku = $pinjam->buku->judul;
         if ($pinjam) {
             $this->nama = $namaPeminjam;
@@ -83,8 +89,20 @@ class PinjamComponent extends Component
             $this->status = 'kembali';
             $this->buku_id = $pinjam->buku->id;
             $this->kembalikan = $pinjam->tgl_dikembalikan;
+            $this->apakah_terkena_denda = $pinjam->apakah_terkena_denda;
+
+            $tanggalKembali = Carbon::parse($this->tgl_kembali);
+            $tanggalSekarang = Carbon::parse(now());
+
+            $selisih = $tanggalKembali->diffInDays($tanggalSekarang,false);
+
+            if($selisih > 0){
+                $pinjam->update([
+                    $pinjam->apakah_terkena_denda = true,
+                    $pinjam->denda = floor($selisih) * 1500
+                ]);
+            }
         }
-        // dd($this->kembalikan);
     }
 
     public function update()
