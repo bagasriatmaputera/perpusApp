@@ -14,7 +14,7 @@ class PinjamComponent extends Component
 {
     use WithPagination, WithoutUrlPagination;
 
-    public $tgl_pinjam, $member = '', $tgl_kembali, $status, $buku = '', $cari, $pinjam_id, $nama, $kembalikan, $buku_id, $apakah_terkena_denda;
+    public $denda, $tgl_pinjam, $member = '', $tgl_kembali, $status, $buku = '', $cari, $pinjam_id, $nama, $kembalikan, $buku_id, $apakah_terkena_denda;
 
     public function render()
     {
@@ -94,14 +94,15 @@ class PinjamComponent extends Component
             $tanggalKembali = Carbon::parse($this->tgl_kembali);
             $tanggalSekarang = Carbon::parse(now());
 
-            $selisih = $tanggalKembali->diffInDays($tanggalSekarang,false);
+            $selisih = $tanggalKembali->diffInDays($tanggalSekarang, false);
 
-            if($selisih > 0){
+            if ($selisih > 0) {
                 $pinjam->update([
                     $pinjam->apakah_terkena_denda = true,
                     $pinjam->denda = floor($selisih) * 1500
                 ]);
             }
+            $this->denda = $pinjam->denda;
         }
     }
 

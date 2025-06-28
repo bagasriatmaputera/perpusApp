@@ -100,7 +100,8 @@
             {{-- Tgl info --}}
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Tgl Dikembalikan:</legend>
-                <input type="text" readonly class="input input-success" value="{{$this->kembalikan ?? 'Belum Dikembalikan'}}" />
+                <input type="text" readonly class="input input-success"
+                    value="{{$this->kembalikan ?? 'Belum Dikembalikan'}}" />
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Tgl Pinjam:</legend>
@@ -110,13 +111,17 @@
                 <legend class="fieldset-legend">Batas Tgl Pinjam:</legend>
                 <input type="text" readonly class="input input-warning" value="{{$this->tgl_kembali}}" />
             </fieldset>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Denda:</legend>
+                <input readonly class="input input-error" value="{{$this->denda ?? '-'}}" />
+            </fieldset>
             <div class="modal-action">
                 <form method="dialog">
                     <!-- if there is a button in form, it will close the modal -->
                     <button class="btn btn-sm">Close</button>
                 </form>
                 <form wire:submit.prevent='update'>
-                    <button class="btn btn-sm btn-accent">Ubah Status</button>
+                    <button onclick="return confirm('Apakah ada denda, dan sudah terbayarkan?')" class="btn btn-sm btn-accent">Ubah Status</button>
                 </form>
             </div>
         </div>
@@ -166,7 +171,7 @@
                     <td>{{$loans->tgl_kembali}}</td>
                     <td>{{$loans->status}}</td>
                     <td><a wire:click='edit({{$loans->id}})' class="btn btn-xs btn-dash btn-accent"
-                            onclick="edit.showModal()">Status</a>  <a wire:click='confirm({{$loans->id}})'
+                            onclick="edit.showModal()">Status</a> <a wire:click='confirm({{$loans->id}})'
                             class="btn btn-xs btn-dash btn-error" onclick="hapus.showModal()">Hapus</a></td>
                 </tr>
                 @endforeach
