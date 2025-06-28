@@ -67,11 +67,6 @@ class PinjamComponent extends Component
         } else {
             session()->flash('error', 'Buku tidak tersedia');
         }
-
-
-
-
-
     }
 
     public function edit($id)
