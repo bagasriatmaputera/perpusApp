@@ -3,6 +3,7 @@
 use App\Livewire\Actions\Logout;
 use App\Livewire\BukuComponent;
 use App\Livewire\HomeComponent;
+use App\Livewire\DashboardComponent;
 use App\Livewire\KategoriComponent;
 use App\Livewire\MemberComponent;
 use App\Livewire\PinjamComponent;
@@ -11,10 +12,6 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::get('/',HomeComponent::class)->name('home');
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     // Auto Route Laravel Build In
@@ -29,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/buku',BukuComponent::class)->name('buku');
     Route::get('/pinjam',PinjamComponent::class)->name('pinjam');
     Route::get('/kategori',KategoriComponent::class)->name('kategori');
+    Route::get('/dasboard',DashboardComponent::class)->name('dashboard');
     Route::post('/logout',Logout::class)->name('logout');
 });
 
