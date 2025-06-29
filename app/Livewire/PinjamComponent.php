@@ -76,7 +76,6 @@ class PinjamComponent extends Component
     public function edit($id)
     {
         $pinjam = Pinjam::find($id);
-        $denda = $pinjam->hitungDenda();
         $namaPeminjam = $pinjam->user->nama;
         $namaBuku = $pinjam->buku->judul;
         $namaBuku = $pinjam->buku->judul;
@@ -96,7 +95,7 @@ class PinjamComponent extends Component
 
             $selisih = $tanggalKembali->diffInDays($tanggalSekarang, false);
 
-            if ($selisih > 0) {
+            if ($selisih > 0 && $this->status == 'pinjam') {
                 $pinjam->update([
                     $pinjam->apakah_terkena_denda = true,
                     $pinjam->denda = floor($selisih) * 1500
