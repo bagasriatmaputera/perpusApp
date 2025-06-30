@@ -1,12 +1,10 @@
 <div>
     <div>
         {{-- In work, do what you enjoy. --}}
-        <h1 class="text-black-800 text-center border border-blue-400 rounded-full font-bold mb-3">Kelola Member</h1>
+        <h1 class="text-center text-xl font-bold text-blue-700 mb-4 border border-blue-400 rounded-full py-2">Kelola
+            Member</h1>
         <hr>
         {{-- Kelola member --}}
-
-        {{-- Tombol Tambah --}}
-        <button class="btn btn-sm btn-info mb-2 mt-2" onclick="my_modal_3.showModal()">Tambah Member</button>
         {{-- alert berhasi tambah member --}}
         @if(session()->has('success'))
         <div role="alert" class="alert alert-success mb-2">
@@ -37,210 +35,163 @@
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <form wire:submit.prevent='tambahMember'>
-                    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4">
-                        <legend class="fieldset-legend">Tambah Member</legend>
+                <form wire:submit.prevent="tambahMember">
+                    <h3 class="font-bold text-lg mb-4">Tambah Member</h3>
+                    <div class="space-y-2">
+
                         <label class="label">Nama</label>
-                        <input type="text" class="input w-auto" wire:model='nama' placeholder="Masukan nama."
-                            value="{{@old('nama')}}" />
+                        <input type="text" class="input input-bordered w-full" wire:model="nama"
+                            placeholder="Masukan nama" />
                         @error('nama')
-                        <div role="alert" class="alert alert-error mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
+                        <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div>
                         @enderror
+
                         <label class="label">Email</label>
-                        <input type="email" class="input w-auto" wire:model='email' placeholder="Masukan Email."
-                            value="{{@old('email')}}" />
+                        <input type="email" class="input input-bordered w-full" wire:model="email"
+                            placeholder="Masukan email" />
                         @error('email')
-                        <div role="alert" class="alert alert-error mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
+                        <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div>
                         @enderror
+
                         <label class="label">Password</label>
-                        <input type="password" class="input w-auto" wire:model='password'
-                            placeholder="Masukan password minimal 8 karakter" value="{{@old('')}}" />
-                        @error('email')
-                        <div role="alert" class="alert alert-error mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
+                        <input type="password" class="input input-bordered w-full" wire:model="password"
+                            placeholder="Minimal 8 karakter" />
+                        @error('password')
+                        <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div>
                         @enderror
+
                         <label class="label">Alamat</label>
-                        <input type="text" class="input w-auto" wire:model='alamat' placeholder="Jl.contoh No 04"
-                            value="{{@old('alamat')}}" />
+                        <input type="text" class="input input-bordered w-full" wire:model="alamat"
+                            placeholder="Jl. Contoh No.04" />
                         @error('alamat')
-                        <div role="alert" class="alert alert-error">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
+                        <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div>
                         @enderror
+
                         <label class="label">Telepon</label>
-                        <input type="number" class="input w-auto" wire:model='telepon' placeholder="083xxxxxxxx"
-                            value="{{@old('telepon')}}" />
+                        <input type="tel" class="input input-bordered w-full" wire:model="telepon"
+                            placeholder="08xxxxxxxxxx" />
                         @error('telepon')
-                        <div role="alert" class="alert alert-error">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
+                        <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div>
                         @enderror
-                    </fieldset>
-                    <button type="submit" class="btn btn-sm btn-info mt-2 ">Tambah Member</button>
+
+                    </div>
+                    <div class="modal-action">
+                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                    </div>
                 </form>
             </div>
         </dialog>
 
-        {{-- modal Edit Member --}}
+        {{-- Edit member --}}
         <dialog wire:ignore.self id="edit" class="modal">
             <div class="modal-box">
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <form wire:submit.prevent='update'>
-                    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4">
-                        <legend class="fieldset-legend">Edit Member</legend>
+                <form wire:submit.prevent="update">
+                    <h3 class="font-bold text-lg mb-4">Edit Member</h3>
+                    <div class="space-y-2">
+
                         <label class="label">Nama</label>
-                        <input type="text" class="input w-auto" wire:model='nama' placeholder="Masukan nama."
-                            value="{{@old('nama')}}" />
-                        @error('nama')
-                        <div role="alert" class="alert alert-error mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
-                        @enderror
+                        <input type="text" class="input input-bordered w-full" wire:model="nama"
+                            placeholder="Masukan nama" />
+                        @error('nama') <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div> @enderror
+
                         <label class="label">Email</label>
-                        <input type="email" class="input w-auto" wire:model='email' placeholder="Masukan Email."
-                            value="{{@old('email')}}" />
-                        @error('email')
-                        <div role="alert" class="alert alert-error mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
-                        @enderror
+                        <input type="email" class="input input-bordered w-full" wire:model="email"
+                            placeholder="Masukan email" />
+                        @error('email') <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div> @enderror
+
                         <label class="label">Password</label>
-                        <input type="password" class="input w-auto" wire:model='password'
-                            placeholder="Masukan password minimal 8 karakter" value="{{@old('')}}" />
-                        @error('email')
-                        <div role="alert" class="alert alert-error mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
+                        <input type="password" class="input input-bordered w-full" wire:model="password"
+                            placeholder="Minimal 8 karakter (opsional)" />
+                        @error('password') <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div>
                         @enderror
+
                         <label class="label">Alamat</label>
-                        <input type="text" class="input w-auto" wire:model='alamat' placeholder="Jl.contoh No 04"
-                            value="{{@old('alamat')}}" />
-                        @error('alamat')
-                        <div role="alert" class="alert alert-error">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
-                        @enderror
+                        <input type="text" class="input input-bordered w-full" wire:model="alamat"
+                            placeholder="Alamat lengkap" />
+                        @error('alamat') <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div> @enderror
+
                         <label class="label">Telepon</label>
-                        <input type="number" class="input w-auto" wire:model='telepon' placeholder="083xxxxxxxx"
-                            value="{{@old('telepon')}}" />
-                        @error('telepon')
-                        <div role="alert" class="alert alert-error">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{$message}}</span>
-                        </div>
+                        <input type="tel" class="input input-bordered w-full" wire:model="telepon"
+                            placeholder="08xxxxxxxx" />
+                        @error('telepon') <div class="alert alert-error py-1 px-2 text-sm">{{ $message }}</div>
                         @enderror
-                    </fieldset>
-                    <button type="submit" class="btn btn-sm btn-info mt-2 ">Edit Member</button>
+
+                    </div>
+                    <div class="modal-action">
+                        <button type="submit" class="btn btn-sm btn-info">Simpan Perubahan</button>
+                    </div>
                 </form>
             </div>
         </dialog>
 
-        {{-- modal Hapus User --}}
+        {{-- hapus --}}
         <dialog wire:ignore.self id="hapus" class="modal">
             <div class="modal-box">
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <div class="flex justify-center mt-4">
-                    <p>Yakin ingin hapus member: <strong>{{$nama}}</strong></p>
-                </div>
-                <div class="flex justify-end mt-4">
-                    <button wire:click='destroy' class="btn btn-sm btn-error">Hapus</button>
+                <h3 class="text-lg font-bold">Hapus Member</h3>
+                <p class="py-4 text-sm">Yakin ingin menghapus member: <strong>{{ $nama }}</strong>?</p>
+                <div class="modal-action justify-end">
+                    <button wire:click="destroy" class="btn btn-sm btn-error">Hapus</button>
                 </div>
             </div>
         </dialog>
 
-        {{-- Cari INput --}}
-        <input type="text" wire:model.live='cari' placeholder="Cari" class="input" />
+        <div class="mt-4">
+            {{-- Input Pencarian --}}
+            <div class="flex justify-between items-center mb-2">
+                {{-- Tombol Tambah --}}
+                <button class="btn btn-sm btn-info mb-2 mt-2" onclick="my_modal_3.showModal()">Tambah Member</button>
+                <input type="text" wire:model.live="cari" placeholder="🔍 Cari member..."
+                    class="input input-bordered input-sm w-full max-w-xs" />
+            </div>
 
-        {{-- table user --}}
-        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-2">
-            <table class="table">
-                <!-- head -->
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Alamat</th>
-                        <th>Telepon</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- row 1 -->
-                    @foreach ($member as $members)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$members->nama}}</td>
-                        <td>{{$members->email}}</td>
-                        <td>{{$members->alamat}}</td>
-                        <td>{{$members->telepon}}</td>
-                        <td><a class="btn btn-xs btn-dash btn-info" onclick="edit.showModal()"
-                                wire:click='edit({{$members->id}})'>Edit</a> <a wire:click='confirm({{$members->id}})'
-                                class="btn btn-xs btn-dash btn-error" onclick="hapus.showModal()">Hapus</a></td>
-                    </tr>
-                    @endforeach
+            {{-- Tabel Member --}}
+            <div class="overflow-x-auto rounded-box border border-base-content/10 shadow-sm bg-base-100">
+                <table class="table table-zebra">
+                    <thead class="bg-base-200 text-base-content">
+                        <tr>
+                            <th>#</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Alamat</th>
+                            <th>Telepon</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($member as $members)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td class="font-medium">{{ $members->nama }}</td>
+                            <td>{{ $members->email }}</td>
+                            <td>{{ $members->alamat }}</td>
+                            <td>{{ $members->telepon }}</td>
+                            <td class="flex gap-2">
+                                <button class="btn btn-xs btn-info" wire:click="edit({{ $members->id }})"
+                                    onclick="edit.showModal()">Edit</button>
+                                <button class="btn btn-xs btn-error" wire:click="confirm({{ $members->id }})"
+                                    onclick="hapus.showModal()">Hapus</button>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-sm text-gray-500">Data member tidak ditemukan.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+                {{-- Pagination --}}
+                <div class="mt-2 px-4">
                     {{ $member->links() }}
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
-    </div>
 
-</div>
+
+    </div>
