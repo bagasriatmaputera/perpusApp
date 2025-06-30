@@ -1,138 +1,31 @@
-<div>
-    {{-- In work, do what you enjoy. --}}
-    <h1 class="text-black-800 text-center border border-blue-400 rounded-full font-bold mb-3">Kelola Kategori</h1>
-    <hr>
-    {{-- Kelola Kategori --}}
+<div class="p-4">
+    <h1 class="text-2xl font-bold text-center text-blue-600 mb-4">Kelola Kategori</h1>
 
-    {{-- Tombol Tambah --}}
-    <button class="btn btn-sm btn-info mb-2 mt-2" onclick="my_modal_3.showModal()">Tambah Kategori</button>
-    {{-- alert berhasi tambah member --}}
+    {{-- Alert Success --}}
     @if(session()->has('success'))
-    <div role="alert" class="alert alert-success mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>{{session('success')}}</span>
+    <div class="alert alert-success mb-3">
+        <span>{{ session('success') }}</span>
     </div>
     @endif
 
-    {{-- alert error --}}
+    {{-- Alert Error --}}
     @if(session()->has('error'))
-    <div role="alert" class="alert alert-error mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>{{session('error')}}</span>
+    <div class="alert alert-error mb-3">
+        <span>{{ session('error') }}</span>
     </div>
     @endif
 
-    {{-- Modal Tambah Kategori --}}
-    <dialog wire:ignore.self id="my_modal_3" class="modal">
-        <div class="modal-box">
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <form wire:submit.prevent='tambahKategori'>
-                <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4">
-                    <legend class="fieldset-legend">Tambah Kategori</legend>
-                    <label class="label">Nama Kategori</label>
-                    <input type="text" class="input w-auto" wire:model='nama' placeholder="Masukan nama."
-                        value="{{@old('nama')}}" />
-                    @error('nama')
-                    <div role="alert" class="alert alert-error mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{$message}}</span>
-                    </div>
-                    @enderror
-                    <label class="label">Deskripsi</label>
-                    <input type="text" class="input w-auto" wire:model='deskripsi' placeholder="Masukan Deskripsi."
-                        value="{{@old('deskripisi')}}" />
-                    @error('email')
-                    <div role="alert" class="alert alert-error mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{$message}}</span>
-                    </div>
-                    @enderror
-                </fieldset>
-                <button type="submit" class="btn btn-sm btn-info mt-2 ">Tambah Member</button>
-            </form>
-        </div>
-    </dialog>
+    {{-- Input Cari & Tombol Tambah --}}
+    <div class="flex justify-between mb-4 flex-wrap gap-2">
+        <input type="text" wire:model.live='cari' placeholder="Cari kategori..."
+            class="input input-bordered w-full sm:w-1/2" />
+        <button class="btn btn-primary" onclick="my_modal_3.showModal()">+ Tambah Kategori</button>
+    </div>
 
-    {{-- modal Edit Kategori --}}
-    <dialog wire:ignore.self id="edit" class="modal">
-        <div class="modal-box">
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <form wire:submit.prevent='update'>
-                <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4">
-                    <legend class="fieldset-legend">Tambah Kategori</legend>
-                    <label class="label">Nama Kategori</label>
-                    <input type="text" class="input w-auto" wire:model='nama' placeholder="Masukan nama."
-                        value="{{@old('nama')}}" />
-                    @error('nama')
-                    <div role="alert" class="alert alert-error mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{$message}}</span>
-                    </div>
-                    @enderror
-                    <label class="label">Deskripsi</label>
-                    <input type="text" class="input w-auto" wire:model='deskripsi' placeholder="Masukan Deskripsi."
-                        value="{{@old('deskripisi')}}" />
-                    @error('email')
-                    <div role="alert" class="alert alert-error mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{$message}}</span>
-                    </div>
-                    @enderror
-                </fieldset>
-                <button type="submit" class="btn btn-sm btn-info mt-2 ">Tambah Member</button>
-            </form>
-        </div>
-    </dialog>
-
-    {{-- modal Hapus User --}}
-    <dialog wire:ignore.self id="hapus" class="modal">
-        <div class="modal-box">
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <div class="flex justify-center mt-4">
-                <p>Yakin ingin hapus kategori: <strong>{{$nama}}</strong></p>
-            </div>
-            <div class="flex justify-end mt-4">
-                <button wire:click='destroy' class="btn btn-sm btn-error">Hapus</button>
-            </div>
-        </div>
-    </dialog>
-
-    {{-- Cari INput --}}
-    <input type="text" wire:model.live='cari' placeholder="Cari" class="input" />
-
-    {{-- table user --}}
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-2">
-        <table class="table">
-            <!-- head -->
-            <thead>
+    {{-- Tabel --}}
+    <div class="overflow-x-auto bg-white rounded-lg shadow border">
+        <table class="table w-full">
+            <thead class="bg-base-200 text-base-content">
                 <tr>
                     <th>#</th>
                     <th>Nama</th>
@@ -141,20 +34,101 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- row 1 -->
-                @foreach ($kategori as $categories)
+                @forelse($kategori as $categories)
                 <tr>
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{$categories->nama}}</td>
-                    <td>{{$categories->deskripsi}}</td>
-                    <td>{{$categories->telepon}}</td>
-                    <td><a class="btn btn-xs btn-dash btn-info" onclick="edit.showModal()"
-                            wire:click='edit({{$categories->id}})'>Edit</a> <a wire:click='confirm({{$categories->id}})'
-                            class="btn btn-xs btn-dash btn-error" onclick="hapus.showModal()">Hapus</a></td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $categories->nama }}</td>
+                    <td>{{ $categories->deskripsi }}</td>
+                    <td class="flex gap-2">
+                        <button class="btn btn-sm btn-info" onclick="edit.showModal()"
+                            wire:click='edit({{ $categories->id }})'>Edit</button>
+                        <button class="btn btn-sm btn-error" onclick="hapus.showModal()"
+                            wire:click='confirm({{ $categories->id }})'>Hapus</button>
+                    </td>
                 </tr>
-                @endforeach
-                {{ $kategori->links() }}
+                @empty
+                <tr>
+                    <td colspan="4" class="text-center text-gray-500 py-4">Tidak ada kategori ditemukan.</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
+        <div class="p-2">
+            {{ $kategori->links() }}
+        </div>
     </div>
+
+    {{-- MODAL TAMBAH --}}
+    <dialog id="my_modal_3" class="modal">
+        <div class="modal-box">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <form wire:submit.prevent='tambahKategori'>
+                <h3 class="font-bold text-lg mb-2">Tambah Kategori</h3>
+                <div class="form-control mb-2">
+                    <label class="label">Nama Kategori</label>
+                    <input type="text" class="input input-bordered" wire:model='nama' placeholder="Masukan nama">
+                    @error('nama')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-control">
+                    <label class="label">Deskripsi</label>
+                    <input type="text" class="input input-bordered" wire:model='deskripsi'
+                        placeholder="Masukan deskripsi">
+                    @error('deskripsi')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <button type="submit" class="btn btn-primary">Tambah Kategori</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    {{-- MODAL EDIT --}}
+    <dialog id="edit" class="modal">
+        <div class="modal-box">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <form wire:submit.prevent='update'>
+                <h3 class="font-bold text-lg mb-2">Edit Kategori</h3>
+                <div class="form-control mb-2">
+                    <label class="label">Nama Kategori</label>
+                    <input type="text" class="input input-bordered" wire:model='nama' placeholder="Masukan nama">
+                    @error('nama')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-control">
+                    <label class="label">Deskripsi</label>
+                    <input type="text" class="input input-bordered" wire:model='deskripsi'
+                        placeholder="Masukan deskripsi">
+                    @error('deskripsi')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <button type="submit" class="btn btn-info">Update Kategori</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    {{-- MODAL HAPUS --}}
+    <dialog id="hapus" class="modal">
+        <div class="modal-box text-center">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <h3 class="text-lg font-semibold mb-4">Yakin ingin hapus kategori:</h3>
+            <p class="mb-4 text-red-600 font-bold">{{ $nama }}</p>
+            <div class="flex justify-center">
+                <button wire:click='destroy' class="btn btn-error">Ya, Hapus</button>
+            </div>
+        </div>
+    </dialog>
 </div>
